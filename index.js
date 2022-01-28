@@ -1,17 +1,31 @@
 const express = require("express");
 const OpenTok = require("opentok");
+const Nylas = require("nylas");
 const app = express();
 var bodyParser = require("body-parser");
 var opentok;
 const cors = require("cors");
 app.use(cors());
-var apiKey = process.env.API_KEY;
-var apiSecret = process.env.API_SECRET;
+
+const nylas_token = "5D9TvVPnV7cGgYG4Xwxci66cRiy1F";
+const clientId = "";
+const clientSecret = "";
+Nylas.config({ clientId: "clientId", clientSecret: "clientSecret" });
+const nylas = Nylas.with(nylas_token);
+
+var apiKey = "47430891";
+var apiSecret = "6ed3f337e6f7a5609761d60d03caf7e748a4dc21";
+
+// var apiKey = process.env.API_KEY;
+// var apiSecret = process.env.API_SECRET;
+// export API_KEY=47430891
+// export API_SECRET=6ed3f337e6f7a5609761d60d03caf7e748a4dc21
 
 if (!apiKey || !apiSecret) {
   console.log("You must specify API_KEY and API_SECRET environment variables");
   process.exit(1);
 }
+
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
@@ -23,7 +37,7 @@ function init() {
   app.listen(3000, function () {
     console.log("Your app is now ready at http://localhost:3000/");
   });
-  console.log(app.get("sessionId"));
+  nylas.contacts.list().then((contacts) => console.log(contacts));
 }
 
 opentok = new OpenTok(apiKey, apiSecret);
@@ -32,9 +46,9 @@ opentok.createSession({ mediaMode: "routed" }, function (err, session) {
   if (err) throw err;
   app.set("sessionId", session.sessionId);
   app.set("layout", "horizontalPresentation");
-  // We will wait on starting the app until this is done
   init();
 });
+
 app.get("/", (req, res) => {
   var sessionId = app.get("sessionId");
   var token = opentok.generateToken(sessionId, {
@@ -80,10 +94,14 @@ app.post("/start", function (req, res) {
     }
   );
 
-  app.get('/stop/:archiveId', function (req, res) {
+  app.get("/stop/:archiveId", function (req, res) {
     var archiveId = req.params.archiveId;
     opentok.stopArchive(archiveId, function (err, archive) {
-      if (err) return res.send(500, 'Could not stop archive ' + archiveId + '. error=' + err.message);
+      if (err)
+        return res.send(
+          500,
+          "Could not stop archive " + archiveId + ". error=" + err.message
+        );
       return res.json(archive);
     });
   });
