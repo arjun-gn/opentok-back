@@ -7,11 +7,20 @@ Nylas.config({
 const nylas = Nylas.with(process.env.NYLAS_ACCESS_TOKEN);
 
 exports.getAllContacts = (req, res) => {
+  console.log('//////////////////');
   nylas.contacts.list().then((contacts) => res.status(200).send(contacts));
 };
-exports.getContact = (req, res) => {
-    const contact =  nylas.contacts.find(`{${req.id}}`);
-  res.status(200).send({contact});
+exports.getContact = async (req, res) => {
+  console.log(req.params.id);
+    try{
+      const contact = await  nylas.contacts.find();
+      res.status(200).send(res);
+    }catch(err)
+    {
+      console.log(err,"====");
+      res.status(401).send({});
+    }
+   
 };
 exports.send = (req, res) => {
   console.log(req.body);
