@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const messageController = require('../controller/nylasMessageController')
+const messageController = require('../controllers/nylasMessageController')
 
 router.route('').get(messageController.getAllMessages).post(messageController.send);
 

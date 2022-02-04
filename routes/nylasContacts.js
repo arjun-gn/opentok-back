@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const contactsController = require('../controller/nylasContactsController')
+const contactsController = require('../controllers/nylasContactsController')
 
 router.route('').get(contactsController.getAllContacts).post(contactsController.send);
 

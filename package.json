@@ -2,18 +2,19 @@
   "name": "opentokserver",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "test",
-    "start": "nodemon index.js"
+    "start": "nodemon server.js"
   },
-  "author": "arjun",
+  "author": "Arjun",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.1",
     "cors": "^2.8.5",
     "dotenv": "^14.3.2",
     "express": "^4.17.2",
+    "mongoose": "^6.2.0",
     "nylas": "^5.10.3",
     "opentok": "^2.12.1",
     "request": "^2.88.0"
