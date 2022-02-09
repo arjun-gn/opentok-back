@@ -13,7 +13,7 @@ router
 router.route("/cards").get(cardControl.getAllCards).post(cardControl.createCard);
 
 router
-  .route("/card:id")
+  .route("/card/:id")
   .patch(cardControl.updateCard)
   .delete(cardControl.deleteCard);
 

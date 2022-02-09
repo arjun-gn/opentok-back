@@ -5,11 +5,11 @@ const cardSchema = new mongoose.Schema({
     type: String,
     required: [true, "Card must have a title..............!"],
     unique: true,
-    trim: true,
+    trim: true, 
     minlength: [4,""],
     maxlength: 10,
   },
-  description: {
+  description: {  
     type: String,
     trim: true,
     required: [true, "Card must have a description"],
